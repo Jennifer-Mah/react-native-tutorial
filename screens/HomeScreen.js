@@ -21,6 +21,7 @@ export default class App extends React.Component{
         <Text style ={{backgroundColor:'yellow', padding:50 }}> {this.state.value}</Text>
         </TouchableOpacity>
 
+
         {/* slider
           <Slider minimumValue={1} maximumVaule={100}
           onValueChange={value=> this.setState({value})}/>
