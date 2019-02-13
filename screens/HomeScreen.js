@@ -1,101 +1,50 @@
 import React from 'react';
 import { StyleSheet,Text, View, Switch, Image, TextInput, ScrollView, 
-  Button, TouchableOpacity, Picker, Slider, FlatList, SectionList} from 'react-native';
+  Button, TouchableOpacity, Picker, Slider, FlatList, SectionList, Platform} from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 
 
-export default class App extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      value: true
-    };
-  }
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 
+
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+  };
   render() {
+    const {navigate} = this.props.navigation;
     return (
-      <View style= {styles.container}>
-        <TouchableOpacity onPress={()=> this.setState({value:"Goodbye!"})}>
-        <Text style ={{backgroundColor:'yellow', padding:50 }}> {this.state.value}</Text>
-        </TouchableOpacity>
-
-
-        {/* slider
-          <Slider minimumValue={1} maximumVaule={100}
-          onValueChange={value=> this.setState({value})}/>
-          <Text>{this.state.value}</Text>
-        */}
-
-
-        {/* select list (picker)
-           <Picker
-        selectedValue={this.state.language}
-        onValueChange={(itemValue, itemIndex) =>
-          this.setState({language: itemValue})
-        }>
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker>      
-      
-        */}
-        
-        {/* other button
-        <TouchableOpacity onPress={()=> this.setState({value:"Goodbye!"})}>
-        <Text style ={{backgroundColor:'yellow', padding:50 }}> {this.state.value}</Text>
-        </TouchableOpacity>
-      
-        */}
-        
-        {/* Button      
-          <Text style ={{backgroundColor:'yellow'}}> {this.state.value}</Text>
-          <Button color="red" title="Press me!" onPress={()=> this.setState({value:"Goodbye!"})} />
-        */}
-        
-        {/* Flex box
-          <Text style ={{backgroundColor:'yellow', flex: 1}}> {this.state.value}</Text>
-          <Text style ={{backgroundColor:'blue' , flex: 1}}> {this.state.value}</Text>
-          <Text style ={{backgroundColor:'green' , flex: 1}}> {this.state.value}</Text>
-          <Text style ={{backgroundColor:'red' , flex: 1}}> {this.state.value}</Text>        
-        */}
-  
-        {/* scroll view
-        <ScrollView>
-          <Text style ={styles.text}> {this.state.value}</Text>
-          <Text style ={styles.text}> {this.state.value}</Text>
-          <Text style ={styles.text}> {this.state.value}</Text>
-        </ScrollView>
-        */}
-  
-        {/* Image code
-        <Image source={{uri: 'https://facebook.github.io/react/logo-og.png'}}
-        style={{width: 400, height: 400}} />
-        */}
-
-        {/* This code is a nested Text with color
-        <Text>Hello! <Text style={{ color:'red' }}> Michael </Text>!</Text>
-        */}
-        {/* This code is used to toggle on and off switch depending on props
-          <Switch value={this.state.value} onValueChange={() =>this.setState({value: !this.state.value}) }/>
-        */}
-      </View>
-
+      <Button
+        title="Go to Jane's profile"
+        onPress={() => navigate('Profile', {name: 'Jane'})}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create(
-{
-  container: {
-    flex: 1,
-    backgroundColor: 'turquoise',
-    justifyContent:'center'
 
- },
-text:{
-  backgroundColor: 'yellow',
-  marginTop: 300,
-  marginBottom: 300
+class ProfileScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Profile',
+  };
+  render() {
+    const {navigate} = this.props.navigation;
+    return (
+      <Button
+        title="Go to Home"
+        onPress={() => navigate('Home', {name: 'Jane'})}
+      />
+    );
+  }
 }
+
+const MainNavigator = createStackNavigator({
+  Home: {screen: HomeScreen},
+  Profile: {screen: ProfileScreen},
 });
+
+const App = createAppContainer(MainNavigator);
+
+export default App;
